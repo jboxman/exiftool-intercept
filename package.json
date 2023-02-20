@@ -1,0 +1,20 @@
+{
+  "name": "exiftool-intercept",
+  "version": "1.0.0",
+  "description": "A wrapper to intercept commands to the exiftool interactive API.",
+  "bin": {
+    "exiftool": "./exiftool"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jason Boxman <jasonb@edseek.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4"
+  }
+}
