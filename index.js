@@ -12,6 +12,13 @@ const logPath = process.env['EXIFTOOL_INTERCEPT_LOG']
   ? process.env['EXIFTOOL_INTERCEPT_LOG']
   : '/tmp/exiftool-intercept.log';
 
+const logAndWriteTo =
+  (handle = 'stdout') =>
+  (s) => {
+    fs.appendFileSync(logPath, `${s}`);
+    process[handle].write(s);
+  };
+
 function main() {
   const args = process.argv.slice(2);
   fs.appendFileSync(logPath, `${args}\n`);
@@ -24,8 +31,11 @@ function main() {
   const cancel = setTimeout(() => rl.close(), 100);
 
   const exiftool = spawn(exiftoolPath, args, {
-    stdio: ['pipe', 'inherit', 'inherit'],
+    stdio: ['pipe', 'pipe', 'pipe'],
   });
+
+  exiftool.stdout.on('data', (s) => logAndWriteTo('stdout')(s));
+  exiftool.stderr.on('data', (s) => logAndWriteTo('stderr')(s));
 
   if (args.includes('-stay_open')) {
     clearTimeout(cancel);
