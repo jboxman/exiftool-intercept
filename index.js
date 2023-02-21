@@ -5,8 +5,12 @@ const fs = require('node:fs');
 
 // TODO -- includes no error handling of any kind
 
-const exiftoolPath = '/usr/local/bin/exiftool-real';
-const logPath = '/tmp/exiftool-intercept.log';
+const exiftoolPath = process.env['EXIFTOOL_REAL_PATH']
+  ? process.env['EXIFTOOL_REAL_PATH']
+  : '/usr/local/bin/exiftool-real';
+const logPath = process.env['EXIFTOOL_INTERCEPT_LOG']
+  ? process.env['EXIFTOOL_INTERCEPT_LOG']
+  : '/tmp/exiftool-intercept.log';
 
 function main() {
   const args = process.argv.slice(2);
